@@ -1,0 +1,19 @@
+{
+    "name": "rust-practice",
+    "dockerComposeFile": "./docker-compose.yaml",
+    "service": "devcontainer",
+    "runServices": [
+        "devcontainer"
+    ],
+    "workspaceFolder": "/workspace/project",
+    "customizations": {
+        "vscode": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode",
+            "extensions": [
+                "rust-lang.rust-analyzer",
+                "dustypomerleau.rust-syntax",
+                "Anthropic.claude-code"
+            ]
+        }
+    }
+}

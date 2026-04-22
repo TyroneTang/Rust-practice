@@ -1,0 +1,24 @@
+version: "3.3"
+
+services:
+  devcontainer:
+    container_name: rust-base-practice
+    image: rust-base:dev
+    working_dir: /workspace/project
+    user: "${UID}:${GID}"
+    network_mode: "host"
+    ipc: host
+    tty: true
+    stdin_open: true
+    privileged: true
+    security_opt:
+      - seccomp:unconfined
+    cap_add:
+      - ALL
+    volumes:
+      - $HOME/.gitconfig:/workspace/.gitconfig
+      - $HOME/etc/ssl/certs:/etc/ssl/certs
+      - $PWD/:/workspace/project
+      - $HOME/.bashrc:/workspace/.bashrc
+      - /usr/local/share/ca-certificates:/usr/local/share/ca-certificates
+    
