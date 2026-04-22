@@ -6,6 +6,8 @@ services:
     image: rust-base:dev
     working_dir: /workspace/project
     user: "${UID}:${GID}"
+    environment:
+      HOME: /workspace
     network_mode: "host"
     ipc: host
     tty: true
@@ -17,6 +19,7 @@ services:
       - ALL
     volumes:
       - $HOME/.gitconfig:/workspace/.gitconfig
+      - $HOME/.ssh:/workspace/.ssh
       - $HOME/etc/ssl/certs:/etc/ssl/certs
       - $PWD/:/workspace/project
       - $HOME/.bashrc:/workspace/.bashrc
