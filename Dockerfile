@@ -31,6 +31,34 @@ RUN --mount=target=/var/lib/apt/lists/learn_rust,type=cache,sharing=locked \
     locales
 
 
+
+# ---------- Workspace --------------- #
+# Non-root
+# Rename pre-existing ubuntu user (UID 1000) to devuser, with /workspace as home
+RUN usermod -l devuser ubuntu && \
+    groupmod -n devuser ubuntu && \
+    usermod -d /workspace devuser && \
+    usermod -s /bin/bash devuser && \
+    rm -rf /home/ubuntu
+
+# Create workspace dirs and give ownership
+RUN mkdir -p /workspace/fnm /workspace/project /workspace/.cache /workspace/.local /workspace/.config && \
+    chown -R devuser:devuser /workspace
+
+# Switch to non-root for everything else
+USER root
+RUN apt-get update && \
+    apt-get install -y sudo && \
+    echo "devuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    rm -rf /var/lib/apt/lists/*
+
+# Pre-create rust install dirs so devuser can write into them
+RUN mkdir -p /usr/local/rustup /usr/local/cargo && \
+    chown -R devuser:devuser /usr/local/rustup /usr/local/cargo
+USER devuser
+
+
+
 # ---------- LANG PACK --------------- #
 
 # RUN --mount=target=/var/lib/apt/lists/learn_rust,type=cache,sharing=locked \

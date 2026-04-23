@@ -5,7 +5,7 @@ services:
     container_name: rust-base-practice
     image: rust-base:dev
     working_dir: /workspace/project
-    user: "${UID}:${GID}"
+    user: devuser
     network_mode: "host"
     ipc: host
     tty: true
@@ -18,7 +18,7 @@ services:
     volumes:
       - $HOME/.gitconfig:/workspace/.gitconfig
       - $HOME/.ssh:/workspace/.ssh:ro
-      - $HOME/etc/ssl/certs:/etc/ssl/certs
+      - /etc/ssl/certs:/etc/ssl/certs
       - $PWD/:/workspace/project
       - $HOME/.bashrc:/workspace/.bashrc
       - /usr/local/share/ca-certificates:/usr/local/share/ca-certificates

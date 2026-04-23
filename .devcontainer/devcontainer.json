@@ -6,13 +6,17 @@
         "devcontainer"
     ],
     "workspaceFolder": "/workspace/project",
+    "remoteUser": "devuser",
+	"containerUser": "devuser",
+	"updateRemoteUserUID": true,
     "customizations": {
         "vscode": {
             "editor.defaultFormatter": "esbenp.prettier-vscode",
             "extensions": [
                 "rust-lang.rust-analyzer",
                 "dustypomerleau.rust-syntax",
-                "Anthropic.claude-code"
+                "Anthropic.claude-code",
+                "google.geminicodeassist"
             ]
         }
     }
