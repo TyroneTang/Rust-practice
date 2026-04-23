@@ -66,6 +66,11 @@ fn compound_data_types(is_enabled: bool) {
 }
 
 
+fn add(x: i32, y:i32) -> i32 {
+    x * y
+}
+
+
 fn rust_function(is_enabled: bool) {
     if !is_enabled {
         println!("disabled rust_function skipping...");
@@ -102,9 +107,63 @@ fn rust_function(is_enabled: bool) {
         price * qty
     };
 
-    println!("resutl from multiply {result}");
+    println!("result from multiply {result}");
+
+    let mod_add = add(50, 100);
+    println!("check mod addd value result:: {mod_add}");
 
 }
+
+fn rust_ownership(is_enabled:bool) {
+    if !is_enabled {
+        println!("rust_ownership module is disabled! skipping...");
+        return;
+    }
+
+    // owner s1, value is owned by s1
+    let s1: String = String::from("RUST");
+    let string_len = _calculate_string_len(&s1);
+    println!("checkout the string length : {string_len}");
+
+    println!("check prev owner s1: {s1}");
+
+    let s2 = s1; // WARNING, ownership transfered, s2 is NEW owner. s1 is "gone";
+    println!("check new owner s2: {s2}");
+
+}
+
+fn _calculate_string_len(input: &str) -> usize {
+    // String is forced converted to &str. String > &str is compatible
+    // &str > String is NOT compatible. One is a pointer accepted, the other references a heap allocated string
+
+    // _calculate_string_len(literal);   // ✅ already &str
+    // _calculate_string_len("inline");  // ✅ literal
+    input.len()
+}
+
+fn _calculate_string_len_2(input: &String) -> usize {
+    // still usable but beware below:
+    // _calculate_string_len_2(literal);  // ❌ compile error — &str is not &String
+    // _calculate_string_len_2("inline"); // ❌ compile error, need to do this instead _calculate_string_len_2(String::from("inline"))
+    // use this if you intend to do copy operations, or capacity or mutate, else always use &str as
+    // typing.
+    input.len()
+}
+
+fn borrowing_and_referencing(is_enabled: bool) {
+    if !is_enabled {
+        println!("borrowing_and_referencing module is disabled! skipping...");
+        return;
+    }
+
+    // refrerences is similar to a pointer / same as borrowing
+    // can be both immutable and mutable (will change the source value in owner)
+
+    let x: i32 = 5;
+    let r: &i32 = &x;
+     
+}
+
 
 fn main() {
     println!("Executing main....");
@@ -113,5 +172,9 @@ fn main() {
     
     compound_data_types(false);
     
-    rust_function(true);
+    rust_function(false);
+
+    rust_ownership(true);
+
+    borrowing_and_referencing(true);
 }
